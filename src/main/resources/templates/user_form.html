@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>User Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .logout {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #d9534f;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .logout:hover {
+            background-color: #c9302c;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        form div {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="password"]:focus,
+        select:focus {
+            outline: none;
+            border-color: #4CAF50;
+            box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .submit {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<a href="/logout" class="logout">Logout</a>
+<h1>User Form</h1>
+<form th:action="@{/admin}" th:object="${user}" method="post">
+    <input type="hidden" th:field="*{id}" />
+    <div>
+        <label for="username">First Name:</label>
+        <input type="text" id="username" th:field="*{username}" />
+    </div>
+    <div>
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" th:field="*{lastName}" />
+    </div>
+    <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" th:field="*{email}" />
+    </div>
+    <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" th:field="*{password}" />
+    </div>
+    <div>
+        <label for="roles">Roles:</label>
+        <select id="roles" th:field="*{roles}" multiple>
+            <option th:each="role : ${roles}"
+                    th:value="${role.id}"
+                    th:text="${role.name}"
+                    th:selected="${user.roles.contains(role)}">
+            </option>
+        </select>
+    </div>
+
+    <button type="submit">Submit</button>
+</form>
+
+</body>
+</html>

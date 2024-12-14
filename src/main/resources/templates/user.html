@@ -1,11 +1,119 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <title>Spring Security Example</title>
+    <title>Spring Security - User Info</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .logout {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #d9534f;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .logout:hover {
+            background-color: #c9302c;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        table {
+            width: 60%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 18px;
+            text-align: left;
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: #fff;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        tr {
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:nth-of-type(even) {
+            background-color: #f3f3f3;
+        }
+
+        tr:last-of-type {
+            border-bottom: 2px solid #4CAF50;
+        }
+
+        td {
+            color: #555;
+        }
+
+        span {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 5px 10px;
+            margin: 2px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+    </style>
 </head>
 <body>
-<h1>User, welcome spring boot security page!</h1>
-
-
+<a href="/logout" class="logout">Logout</a>
+<h1>User Info</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Password</th>
+        <th>Roles</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.username}"></td>
+        <td th:text="${user.lastName}"></td>
+        <td th:text="${user.email}"></td>
+        <td th:text="${user.password}"></td>
+        <!-- Роли пользователя -->
+        <td>
+            <span th:each="role : ${user.roles}" th:text="${role.name}"></span>
+        </td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>
