@@ -26,4 +26,9 @@ public class RoleService {
         return roleRepository.findAll();
     }
 
+    @Transactional
+    public Role getRoleByName(String name) {
+        return roleRepository.findByName(name).orElse(null);
+    }
+
 }

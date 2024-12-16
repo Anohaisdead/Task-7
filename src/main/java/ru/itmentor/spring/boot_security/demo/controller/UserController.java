@@ -1,17 +1,17 @@
 package ru.itmentor.spring.boot_security.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.security.core.Authentication;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import ru.itmentor.spring.boot_security.demo.dto.UserDto;
 import ru.itmentor.spring.boot_security.demo.model.User;
 import ru.itmentor.spring.boot_security.demo.service.UserService;
 
 
-@Controller
+@RestController
 @RequestMapping("/user")
 public class UserController {
 
@@ -23,16 +23,14 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public String showUser(@PathVariable long id, Model model , Authentication authentication) {
+    public UserDto showUser(@PathVariable long id, Authentication authentication) {
 
         if (authentication.getPrincipal() instanceof User user) {
             if (id == user.getId()) {
-                user = userService.findById(id);
-                model.addAttribute("user", user);
-                return "user";
+                return new UserDto(userService.findById(id));
             }
         }
-        return "redirect:/";
+        return null;
     }
 
 }

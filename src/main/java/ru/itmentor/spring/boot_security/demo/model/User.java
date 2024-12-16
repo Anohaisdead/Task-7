@@ -1,8 +1,12 @@
 package ru.itmentor.spring.boot_security.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -10,7 +14,8 @@ import java.util.*;
 
 
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Table(name="users")
 @Entity
 public class User implements UserDetails {
@@ -21,11 +26,11 @@ public class User implements UserDetails {
     @Column(name = "name")
     private String username;
 
-    @Column(name = "last_name")
-    private String lastName;
-
-    @Column(name = "email")
-    private String email;
+//    @Column(name = "last_name")
+//    private String lastName;
+//
+//    @Column(name = "email")
+//    private String email;
 
     @Column(name="password")
     private String password;
@@ -35,6 +40,7 @@ public class User implements UserDetails {
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "roles_id"))
+    @JsonManagedReference
     private Set<Role> roles = new HashSet<>();
 
     @Override
@@ -42,10 +48,6 @@ public class User implements UserDetails {
         return roles;
     }
 
-    @Override
-    public String getUsername() {
-        return username;
-    }
     @Override
     public String getPassword(){
         return password;
